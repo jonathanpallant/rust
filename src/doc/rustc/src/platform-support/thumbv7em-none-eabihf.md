@@ -11,7 +11,7 @@ Processors in this family include the:
 
 See [`arm-none-eabi`](arm-none-eabi.md) for information applicable to all `arm-none-eabi` targets.
 
-This target uses the hard-float ABI: functions which take `f32` or `f64` as arguments will have them passed via FPU registers. This target therefore srequire the use of an FPU (which is optional on Cortex-M4 and Cortex-M7). See also the soft-float ABI version of this target [`thumbv7em-none-eabi`](thumbv7em-none-eabi.md).
+This target uses the hard-float ABI: functions which take `f32` or `f64` as arguments will have them passed via FPU registers. This target therefore requires the use of an FPU (which is optional on Cortex-M4 and Cortex-M7). See also the soft-float ABI version of this target [`thumbv7em-none-eabi`](thumbv7em-none-eabi.md).
 
 [t32-isa]: https://developer.arm.com/Architectures/T32%20Instruction%20Set%20Architecture
 [ARMv7E-M]: https://developer.arm.com/documentation/ddi0403/latest/
