@@ -1,15 +1,19 @@
 # `{arm,thumb}*-none-eabi(hf)?`
 
 **Tier: 2**
+
 - [arm(eb)?v7r-none-eabi(hf)?](armv7r-none-eabi.md)
 - armv7a-none-eabi
-- thumbv6m-none-eabi
-- thumbv7m-none-eabi
-- thumbv7em-none-eabi(hf)?
-- thumbv8m.base-none-eabi
-- thumbv8m.main-none-eabi(hf)?
+- [thumbv6m-none-eabi](thumbv6m-none-eabi.md)
+- [thumbv7m-none-eabi](thumbv7m-none-eabi.md)
+- [thumbv7em-none-eabi](thumbv7em-none-eabi.md)
+- [thumbv7em-none-eabihf](thumbv7em-none-eabihf.md)
+- [thumbv8m.base-none-eabi](thumbv8m.base-none-eabi.md)
+- [thumbv8m.main-none-eabi](thumbv8m.main-none-eabi.md)
+- [thumbv8m.main-none-eabihf](thumbv8m.main-none-eabihf.md)
 
 **Tier: 3**
+
 - [{arm,thumb}v4t-none-eabi](armv4t-none-eabi.md)
 - [{arm,thumb}v5te-none-eabi](armv5te-none-eabi.md)
 - armv7a-none-eabihf
@@ -17,9 +21,19 @@
 
 Bare-metal target for 32-bit ARM CPUs.
 
-If a target has a `*hf` variant, that variant uses the hardware floating-point
-ABI and enables some minimum set of floating-point features based on the FPU(s)
-available in that processor family.
+If a target ends if `eabi`, that target uses the so-called *soft-float ABI*:
+functions which take `f32` or `f64` as arguments will have those values packed
+into an integer registers. This means that an FPU is not required, but, inside a
+function FPU instructions maybe be used if the code is compiled a `target-cpu`
+or `target-feature` option that enables FPU support.
+
+If a target ends if `eabihf`, that target uses the so-called *hard-float ABI*:
+functions which take `f32` or `f64` as arguments will have them passed via FPU
+registers. These target therefore require the use of an FPU and will assume the
+minimum support FPU for that architecture is available. More advanced FPU
+instructions (e.g. for double-precision `f64` values) may be generated if the
+code is compiled a `target-cpu` or `target-feature` option that enables such
+additional FPU support.
 
 ## Requirements
 
@@ -45,14 +59,15 @@ according to the specific device you are using. Pass
 `-Clink-arg=-Tyour_script.ld` as a rustc argument to make the linker use
 `your_script.ld` during linking.
 
-Targets named `thumb*` instead of `arm*`
-generate Thumb-mode code by default. M-profile processors (`thumbv*m*-*`
-targets) only support Thumb-mode code.
-For the `arm*` targets, Thumb-mode code generation can be enabled by using
-`-C target-feature=+thumb-mode`. Using the unstable
-`#![feature(arm_target_feature)]`, the attribute
-`#[target_feature(enable = "thumb-mode")]` can be applied to individual
-`unsafe` functions to cause those functions to be compiled to Thumb-mode code.
+Targets named `thumb*` instead of `arm*` generate Thumb (T32) code by default
+instead of Arm (A32) code. Most Arm chips support both Thumb mode and Arm mode,
+except that M-profile processors (`thumbv*m*-*` targets) only support Thumb-mode.
+
+For the `arm*` targets, Thumb-mode code generation can be enabled by using `-C
+target-feature=+thumb-mode`. Using the unstable
+`#![feature(arm_target_feature)]`, the attribute `#[target_feature(enable =
+"thumb-mode")]` can be applied to individual `unsafe` functions to cause those
+functions to be compiled to Thumb-mode code.
 
 ## Building Rust Programs
 
@@ -69,15 +84,22 @@ build-std = ["core"]
 ```
 
 Most of `core` should work as expected, with the following notes:
-* If the target is not `*hf`, then floating-point operations are emulated in
-  software.
+
+* Floating-point operations are emulated in software unless LLVM is told to
+  enable FPU support (either by using an `eabihf` target, specifying a
+  `target-cpu` with FPU support, or using a `target-feature` to support for a
+  specific kind of FPU)
 * Integer division is also emulated in software on some targets, depending on
-  the CPU.
-* Architectures prior to ARMv7 don't have atomic instructions.
+  the target, `target-cpu` and `target-feature`s.
+* Architectures prior to ARMv7 don't have atomic compare-and-swap instructions
+  like [`AtomicU32::fetch_add`][fetch-add], only basic load and store
+  operations.
 
 `alloc` is also supported, as long as you provide your own global allocator.
 
 Rust programs are output as ELF files.
+
+[fetch-add]: https://doc.rust-lang.org/stable/std/sync/atomic/struct.AtomicU32.html#method.fetch_add
 
 ## Testing
 
