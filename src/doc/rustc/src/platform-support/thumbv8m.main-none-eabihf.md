@@ -26,8 +26,77 @@ This target uses the hard-float ABI: functions which take `f32` or `f64` as argu
 
 ## Target CPU and Target Feature options
 
-TODO
+See [the bare-metal Arm
+docs](arm-none-eabi.md#target-cpu-and-target-feature-options) for details on how
+to use these flags.
 
-## Cross-compilation toolchains and C code
+### Table of supported CPUs
 
-This target supports C code compiled with the `arm-none-eabi` target triple and `-march=armv6-m` or a suitable `-mcpu` flag.
+| CPU         | FPU | DSP | MVE       | Target CPU    | Target Features       |
+| ----------- | --- | --- | --------- | ------------- | --------------------- |
+| Cortex-M33  | SP  | No  | N/A       | `cortex-m33`  | `-dsp`                |
+| Cortex-M33  | SP  | Yes | N/A       | `cortex-m33`  | None                  |
+| Cortex-M33P | SP  | No  | N/A       | `cortex-m35p` | `-dsp`                |
+| Cortex-M33P | SP  | Yes | N/A       | `cortex-m35p` | None                  |
+| Cortex-M55  | DP  | Yes | No        | `cortex-m55`  | `-mve`                |
+| Cortex-M55  | DP  | Yes | Int       | `cortex-m55`  | `-mve.fp`             |
+| Cortex-M55  | DP  | Yes | Int+Float | `cortex-m55`  | None                  |
+| Cortex-M85  | DP  | Yes | No        | `cortex-m85`  | `-mve`                |
+| Cortex-M85  | DP  | Yes | Int       | `cortex-m85`  | `-mve.fp`             |
+| Cortex-M85  | DP  | Yes | Int+Float | `cortex-m85`  | None                  |
+
+### Arm Cortex-M33
+
+The target CPU is `cortex-m33`.
+
+* Has optional DSP extensions
+  * support is controlled by the `dsp` *target-feature*
+  * enabled by default with this *target-cpu*
+* Has an optional single precision FPU
+  * support is enabled by default with this *target-cpu*
+  * support is required when using the hard-float ABI
+
+### Arm Cortex-M35P
+
+The target CPU is `cortex-m35p`.
+
+* Has optional DSP extensions
+  * support is controlled by the `dsp` *target-feature*
+  * enabled by default with this *target-cpu*
+* Has a single precision FPU
+  * support is enabled by default with this *target-cpu*
+  * support is required when using the hard-float ABI
+
+### Arm Cortex-M55
+
+The target CPU is `cortex-m55`.
+
+* Has DSP extensions
+  * support is controlled by the `dsp` *target-feature*
+  * enabled by default with this *target-cpu*
+* Has an optional double-precision FPU that also supports half-precision FP16 values
+  * support is enabled by default with this *target-cpu*
+  * support is required when using the hard-float ABI
+* Has optional support for M-Profile Vector Extensions
+  * Also known as *Helium Technology*
+  * Available with only integer support, or both integer/float support
+  * The appropriate feature for the MVE is either `mve` (integer) or `mve.fp` (float)
+  * `mve.fp` is enabled by default on this target CPU
+  * disable using `-mve.fp` (disable float MVE) or `-mve` (disable all MVE)
+
+### Arm Cortex-M85
+
+The target CPU is `cortex-m85`.
+
+* Has DSP extensions
+  * support is controlled by the `dsp` *target-feature*
+  * enabled by default with this *target-cpu*
+* Has an optional double-precision FPU that also supports half-precision FP16 values
+  * support is enabled by default with this *target-cpu*
+  * support is required when using the hard-float ABI
+* Has optional support for M-Profile Vector Extensions
+  * Also known as *Helium Technology*
+  * Available with only integer support, or both integer/float support
+  * The appropriate feature for the MVE is either `mve` (integer) or `mve.fp` (float)
+  * `mve.fp` is enabled by default on this target CPU
+  * disable using `-mve.fp` (disable float MVE) or `-mve` (disable all MVE)

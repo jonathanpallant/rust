@@ -1,25 +1,38 @@
 # `{arm,thumb}*-none-eabi(hf)?`
 
-**Tier: 2**
+## Tier 2 Target List
 
-- [arm(eb)?v7r-none-eabi(hf)?](armv7r-none-eabi.md)
-- armv7a-none-eabi
-- [thumbv6m-none-eabi](thumbv6m-none-eabi.md)
-- [thumbv7m-none-eabi](thumbv7m-none-eabi.md)
-- [thumbv7em-none-eabi](thumbv7em-none-eabi.md)
-- [thumbv7em-none-eabihf](thumbv7em-none-eabihf.md)
-- [thumbv8m.base-none-eabi](thumbv8m.base-none-eabi.md)
-- [thumbv8m.main-none-eabi](thumbv8m.main-none-eabi.md)
-- [thumbv8m.main-none-eabihf](thumbv8m.main-none-eabihf.md)
+- Arm A-Profile Architectures
+  - `armv7a-none-eabi`
+- Arm R-Profile Architectures
+  - [`armv7r-none-eabi` and `armv7r-none-eabihf`](armv7r-none-eabi.md)
+  - [`armebv7r-none-eabi` and `armebv7r-none-eabihf`](armv7r-none-eabi.md)
+- Arm M-Profile Architectures
+  - [`thumbv6m-none-eabi`](thumbv6m-none-eabi.md)
+  - [`thumbv7m-none-eabi`](thumbv7m-none-eabi.md)
+  - [`thumbv7em-none-eabi`](thumbv7em-none-eabi.md) and [`thumbv7em-none-eabihf`](thumbv7em-none-eabihf.md)
+  - [`thumbv8m.base-none-eabi`](thumbv8m.base-none-eabi.md)
+  - [`thumbv8m.main-none-eabi`](thumbv8m.main-none-eabi.md) and [`thumbv8m.main-none-eabihf`](thumbv8m.main-none-eabihf.md)
+- *Legacy* Arm Architectures
+  - None
 
-**Tier: 3**
+## Tier 3 Target List
 
-- [{arm,thumb}v4t-none-eabi](armv4t-none-eabi.md)
-- [{arm,thumb}v5te-none-eabi](armv5te-none-eabi.md)
-- armv7a-none-eabihf
-- [armv8r-none-eabihf](armv8r-none-eabihf.md)
+- Arm A-Profile Architectures
+  - `armv7a-none-eabihf`
+- Arm R-Profile Architectures
+  - [`armv8r-none-eabihf`](armv8r-none-eabihf.md)
+- Arm M-Profile Architectures
+  - None
+- *Legacy* Arm Architectures
+  - [`armv4t-none-eabi` and `thumbv4t-none-eabi`](armv4t-none-eabi.md)
+  - [`armv5te-none-eabi` and `thumbv5te-none-eabi`](armv5te-none-eabi.md)
 
-Bare-metal target for 32-bit ARM CPUs.
+## Common Target Details
+
+This documentation covers details that apply to a range of bare-metal target for
+32-bit ARM CPUs. In addition, target specific details may be covered in their
+own document.
 
 If a target ends if `eabi`, that target uses the so-called *soft-float ABI*:
 functions which take `f32` or `f64` as arguments will have those values packed
@@ -34,6 +47,49 @@ minimum support FPU for that architecture is available. More advanced FPU
 instructions (e.g. for double-precision `f64` values) may be generated if the
 code is compiled a `target-cpu` or `target-feature` option that enables such
 additional FPU support.
+
+## Target CPU and Target Feature options
+
+It is possible to tell Rust (or LLVM) that you have a specific model of Arm
+processor, using the [`-C target-cpu`][target-cpu] option. You can also control
+whether Rust (or LLVM) will include instructions that target optional hardware
+features, e.g. hardware floating point, or vector maths operations, using [`-C
+target-feature`][target-feature].
+
+It is important to note that selecting a *target-cpu* will typically enable
+*all* the optional features available from Arm on that model of CPU and your
+particular implementation of that CPU may not have those features available. In
+that case, you can use `-C target-feature=-option` to turn off the specific CPU
+features you do not have available, leaving you with the optimised instruction
+scheduling and support for the features you do have. More details are available
+in the detailed target-specific documentation.
+
+**Note:** Many target-features are currently unstable and subject to change, and
+if you use them you should dissassmble the compiler output and manually inspect
+it to ensure only appropriate instructions for your CPU have been generated.
+
+If do you wish to use the *target-cpu* and *target-feature* options, you can add
+them to your `.cargo/config.toml` file alongside any other flags your project
+uses (likely linker related ones):
+
+```toml
+rustflags = [
+  # Usual Arm bare-metal linker setup
+  "-C", "link-arg=-Tlink.x",
+  "-C", "link-arg=--nmagic",
+  # tell Rust we have a Cortex-M55
+  "-C", "target-cpu=cortex-m55",
+  # tell Rust our Cortex-M55 doesn't have Floating-Point M-Profile Vector
+  # Extensions (but it does have everything else a Cortex-M55 could have).
+  "-C", "target-feature=-mve.fp"
+]
+
+[build]
+target = "thumbv8m.main-none-eabihf"
+```
+
+[target-cpu]: https://doc.rust-lang.org/rustc/codegen-options/index.html#target-cpu
+[target-feature]: https://doc.rust-lang.org/rustc/codegen-options/index.html#target-feature
 
 ## Requirements
 

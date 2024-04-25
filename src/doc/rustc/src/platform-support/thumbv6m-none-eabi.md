@@ -26,8 +26,32 @@ This target uses the soft-float ABI: functions which take `f32` or `f64` as argu
 
 ## Target CPU and Target Feature options
 
-TODO
+See [the bare-metal Arm
+docs](arm-none-eabi.md#target-cpu-and-target-feature-options) for details on how
+to use these flags.
 
-## Cross-compilation toolchains and C code
+### Table of supported CPUs
 
-This target supports C code compiled with the `arm-none-eabi` target triple and `-march=armv6-m` or a suitable `-mcpu` flag.
+| CPU        | FPU | Target CPU      | Target Features       |
+| ---------- | --- | --------------- | --------------------- |
+| Cortex-M0  | No  | `cortex-m0`     | None                  |
+| Cortex-M0+ | No  | `cortex-m0plus` | None                  |
+| Cortex-M1  | No  | `cortex-m1`     | None                  |
+
+### Arm Cortex-M0
+
+The target CPU option is `cortex-m0`.
+
+There are no relevant feature flags, and the FPU is not available.
+
+### Arm Cortex-M0+
+
+The target CPU option is `cortex-m0plus`.
+
+There are no relevant feature flags, and the FPU is not available.
+
+### Arm Cortex-M1
+
+The target CPU option is `cortex-m1`.
+
+There are no relevant feature flags, and the FPU is not available.
