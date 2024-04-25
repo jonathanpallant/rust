@@ -34,26 +34,26 @@ to use these flags.
 
 ### Table of supported CPUs
 
-| CPU         | FPU | DSP | MVE       | Target CPU   | Target Features       |
-| ----------- | --- | --- | --------- | ------------ | --------------------- |
-| Cortex-M33  | No  | No  | N/A       | `cortex-m33` | `+soft-float,-dsp`    |
-| Cortex-M33  | No  | Yes | N/A       | `cortex-m33` | `+soft-float`         |
-| Cortex-M33  | SP  | No  | N/A       | `cortex-m33` | `-dsp`                |
-| Cortex-M33  | SP  | Yes | N/A       | `cortex-m33` | None                  |
+| CPU         | FPU | DSP | MVE       | Target CPU    | Target Features       |
+| ----------- | --- | --- | --------- | ------------- | --------------------- |
+| Cortex-M33  | No  | No  | N/A       | `cortex-m33`  | `+soft-float,-dsp`    |
+| Cortex-M33  | No  | Yes | N/A       | `cortex-m33`  | `+soft-float`         |
+| Cortex-M33  | SP  | No  | N/A       | `cortex-m33`  | `-dsp`                |
+| Cortex-M33  | SP  | Yes | N/A       | `cortex-m33`  | None                  |
 | Cortex-M35P | No  | No  | N/A       | `cortex-m35p` | `+soft-float,-dsp`    |
 | Cortex-M35P | No  | Yes | N/A       | `cortex-m35p` | `+soft-float`         |
 | Cortex-M35P | SP  | No  | N/A       | `cortex-m35p` | `-dsp`                |
 | Cortex-M35P | SP  | Yes | N/A       | `cortex-m35p` | None                  |
-| Cortex-M55  | No  | Yes | No        | `cortex-m55` | `+soft-float,-mve`    |
-| Cortex-M55  | DP  | Yes | No        | `cortex-m55` | `-mve`                |
-| Cortex-M55  | No  | Yes | Int       | `cortex-m55` | `+soft-float,-mve.fp` |
-| Cortex-M55  | DP  | Yes | Int       | `cortex-m55` | `-mve.fp`             |
-| Cortex-M55  | DP  | Yes | Int+Float | `cortex-m55` | None                  |
-| Cortex-M85  | No  | Yes | No        | `cortex-m85` | `+soft-float,-mve`    |
-| Cortex-M85  | DP  | Yes | No        | `cortex-m85` | `-mve`                |
-| Cortex-M85  | No  | Yes | Int       | `cortex-m85` | `+soft-float,-mve.fp` |
-| Cortex-M85  | DP  | Yes | Int       | `cortex-m85` | `-mve.fp`             |
-| Cortex-M85  | DP  | Yes | Int+Float | `cortex-m85` | None                  |
+| Cortex-M55  | No  | Yes | No        | `cortex-m55`  | `+soft-float,-mve`    |
+| Cortex-M55  | DP  | Yes | No        | `cortex-m55`  | `-mve`                |
+| Cortex-M55  | No  | Yes | Int       | `cortex-m55`  | `+soft-float,-mve.fp` |
+| Cortex-M55  | DP  | Yes | Int       | `cortex-m55`  | `-mve.fp`             |
+| Cortex-M55  | DP  | Yes | Int+Float | `cortex-m55`  | None                  |
+| Cortex-M85  | No  | Yes | No        | `cortex-m85`  | `+soft-float,-mve`    |
+| Cortex-M85  | DP  | Yes | No        | `cortex-m85`  | `-mve`                |
+| Cortex-M85  | No  | Yes | Int       | `cortex-m85`  | `+soft-float,-mve.fp` |
+| Cortex-M85  | DP  | Yes | Int       | `cortex-m85`  | `-mve.fp`             |
+| Cortex-M85  | DP  | Yes | Int+Float | `cortex-m85`  | None                  |
 
 ### Arm Cortex-M33
 
