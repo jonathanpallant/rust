@@ -34,19 +34,20 @@ This documentation covers details that apply to a range of bare-metal target for
 32-bit ARM CPUs. In addition, target specific details may be covered in their
 own document.
 
-If a target ends if `eabi`, that target uses the so-called *soft-float ABI*:
+If a target ends in `eabi`, that target uses the so-called *soft-float ABI*:
 functions which take `f32` or `f64` as arguments will have those values packed
-into an integer registers. This means that an FPU is not required, but, inside a
-function FPU instructions maybe be used if the code is compiled a `target-cpu`
-or `target-feature` option that enables FPU support.
+into integer registers. This means that an FPU is not required from an ABI
+perspective, but within a function FPU instructions may still be used if the
+code is compiled with a `target-cpu` or `target-feature` option that enables
+FPU support.
 
 If a target ends if `eabihf`, that target uses the so-called *hard-float ABI*:
 functions which take `f32` or `f64` as arguments will have them passed via FPU
 registers. These target therefore require the use of an FPU and will assume the
 minimum support FPU for that architecture is available. More advanced FPU
-instructions (e.g. for double-precision `f64` values) may be generated if the
-code is compiled a `target-cpu` or `target-feature` option that enables such
-additional FPU support.
+instructions (e.g. for double-precision `f64` instructions) may be generated if
+the code is compiled with a `target-cpu` or `target-feature` option that
+enables such additional FPU support.
 
 ## Target CPU and Target Feature options
 
