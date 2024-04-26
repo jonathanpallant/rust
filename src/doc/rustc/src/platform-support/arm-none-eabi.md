@@ -45,9 +45,9 @@ If a target ends if `eabihf`, that target uses the so-called *hard-float ABI*:
 functions which take `f32` or `f64` as arguments will have them passed via FPU
 registers. These target therefore require the use of an FPU and will assume the
 minimum support FPU for that architecture is available. More advanced FPU
-instructions (e.g. for double-precision `f64` instructions) may be generated if
-the code is compiled with a `target-cpu` or `target-feature` option that
-enables such additional FPU support.
+instructions (e.g. ones that work on double-precision `f64` values) may be
+generated if the code is compiled with a `target-cpu` or `target-feature` option
+that enables such additional FPU support.
 
 ## Target CPU and Target Feature options
 
