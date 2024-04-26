@@ -148,15 +148,19 @@ Most of `core` should work as expected, with the following notes:
   specific kind of FPU)
 * Integer division is also emulated in software on some targets, depending on
   the target, `target-cpu` and `target-feature`s.
-* Architectures prior to ARMv7 don't have atomic compare-and-swap instructions
-  like [`AtomicU32::fetch_add`][fetch-add], only basic load and store
-  operations.
+* Older Arm architectures (e.g. Armv4, Armv5TE and Armv6-M) are limited to basic
+  [`load`][atomic-load] and [`store`][atomic-store] operations, and not more
+  advanced operations like [`fetch_add`][fetch-add] or
+  [`compare_exchange`][compare-exchange].
 
 `alloc` is also supported, as long as you provide your own global allocator.
 
 Rust programs are output as ELF files.
 
+[atomic-load]: https://doc.rust-lang.org/stable/std/sync/atomic/struct.AtomicU32.html#method.load
+[atomic-store]: https://doc.rust-lang.org/stable/std/sync/atomic/struct.AtomicU32.html#method.store
 [fetch-add]: https://doc.rust-lang.org/stable/std/sync/atomic/struct.AtomicU32.html#method.fetch_add
+[compare-exchange]: https://doc.rust-lang.org/stable/std/sync/atomic/struct.AtomicU32.html#method.compare_exchange
 
 ## Testing
 
