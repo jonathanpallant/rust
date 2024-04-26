@@ -2,7 +2,8 @@
 
 **Tier: 2**
 
-Bare-metal target for CPUs in the Mainline [ARMv8-M] architecture family, supporting a subset of the [T32 ISA][t32-isa].
+Bare-metal target for CPUs in the Mainline [ARMv8-M] architecture family,
+supporting a subset of the [T32 ISA][t32-isa].
 
 Processors in this family include the:
 
@@ -11,9 +12,15 @@ Processors in this family include the:
 * [Arm Cortex-M55][cortex-m55]
 * [Arm Cortex-M85][cortex-m85]
 
-See [`arm-none-eabi`](arm-none-eabi.md) for information applicable to all `arm-none-eabi` targets.
+See [`arm-none-eabi`](arm-none-eabi.md) for information applicable to all
+`arm-none-eabi` targets.
 
-This target uses the soft-float ABI: functions which take `f32` or `f64` as arguments will have those values packed into an integer registers. This target therefore does not require the use of an FPU (which is optional on Cortex-M33, Cortex-M55 and Cortex-M85), but an FPU can be optionally enabled if desired. See also the hard-float ABI version of this target [`thumbv8m.main-none-eabihf`](thumbv7em-none-eabihf.md).
+This target uses the soft-float ABI: functions which take `f32` or `f64` as
+arguments will have those values packed into an integer registers. This target
+therefore does not require the use of an FPU (which is optional on Cortex-M33,
+Cortex-M55 and Cortex-M85), but an FPU can be optionally enabled if desired. See
+also the hard-float ABI version of this target
+[`thumbv8m.main-none-eabihf`](thumbv7em-none-eabihf.md).
 
 [t32-isa]: https://developer.arm.com/Architectures/T32%20Instruction%20Set%20Architecture
 [ARMv8-M]: https://developer.arm.com/documentation/ddi0553/latest/
@@ -24,7 +31,8 @@ This target uses the soft-float ABI: functions which take `f32` or `f64` as argu
 
 ## Target maintainers
 
-* [Rust Embedded Devices Working Group Cortex-M Team](https://github.com/rust-embedded), `cortex-m@teams.rust-embedded.org`
+* [Rust Embedded Devices Working Group Cortex-M
+  Team](https://github.com/rust-embedded), `cortex-m@teams.rust-embedded.org`
 
 ## Target CPU and Target Feature options
 
@@ -84,13 +92,15 @@ The target CPU is `cortex-m55`.
 * Has DSP extensions
   * support is controlled by the `dsp` *target-feature*
   * enabled by default with this *target-cpu*
-* Has an optional double-precision FPU that also supports half-precision FP16 values
+* Has an optional double-precision FPU that also supports half-precision FP16
+  values
   * support is enabled by default with this *target-cpu*
   * disable support using the `+soft-float` feature
 * Has optional support for M-Profile Vector Extensions
   * Also known as *Helium Technology*
   * Available with only integer support, or both integer/float support
-  * The appropriate feature for the MVE is either `mve` (integer) or `mve.fp` (float)
+  * The appropriate feature for the MVE is either `mve` (integer) or `mve.fp`
+    (float)
   * `mve.fp` is enabled by default on this target CPU
   * disable using `-mve.fp` (disable float MVE) or `-mve` (disable all MVE)
 
@@ -101,12 +111,14 @@ The target CPU is `cortex-m85`.
 * Has DSP extensions
   * support is controlled by the `dsp` *target-feature*
   * enabled by default with this *target-cpu*
-* Has an optional double-precision FPU that also supports half-precision FP16 values
+* Has an optional double-precision FPU that also supports half-precision FP16
+  values
   * support is enabled by default with this *target-cpu*
   * disable support using the `+soft-float` feature
 * Has optional support for M-Profile Vector Extensions
   * Also known as *Helium Technology*
   * Available with only integer support, or both integer/float support
-  * The appropriate feature for the MVE is either `mve` (integer) or `mve.fp` (float)
+  * The appropriate feature for the MVE is either `mve` (integer) or `mve.fp`
+    (float)
   * `mve.fp` is enabled by default on this target CPU
   * disable using `-mve.fp` (disable float MVE) or `-mve` (disable all MVE)
